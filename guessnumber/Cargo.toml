@@ -1,0 +1,8 @@
+[package]
+name = "guessnumber"
+version = "0.1.0"
+authors = ["yqsy <yqsy021@126.com>"]
+
+[dependencies]
+
+rand = "0.3.0"
