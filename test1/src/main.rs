@@ -29,6 +29,35 @@
 //    i + 1
 //}
 
+//fn take(v: Vec<i32>) {
+//
+//}
+
+//fn double(x: i32) -> i32 {
+//    x * 2
+//}
+
+//fn change_truth(x: bool) -> bool {
+//    !x
+//}
+
+
+// 需要返回所有权
+//fn foo(v: Vec<i32>) -> Vec<i32> {
+//    v
+//}
+
+
+// 更多的变量需要返回所有权时将会变得非常的糟糕
+//fn foo(v1: Vec<i32>, v2: Vec<i32>) -> (Vec<i32>, Vec<i32>, i32) {
+//    (v1, v2, 42)
+//}
+
+// 借用,更好的例子
+//fn foo(v1: &Vec<i32>, v2: &Vec<i32>) -> i32 {
+//    42
+//}
+
 fn main() {
 
     // 定义方法1: 推导类型
@@ -161,6 +190,286 @@ fn main() {
 //    loop {
 //
 //    }
+
+    // while 循环
+//    let mut x = 5;
+//
+//    let mut done = false;
+//
+//    while !done {
+//        x += x - 3;
+//
+//        println!("{}", x);
+//
+//        if x % 5 == 0 {
+//            done = true;
+//        }
+//    }
+
+    // for 循环
+//    for x in 0..10 {
+//        println!("{}",x);
+//    }
+
+//    let array = [0, 1, 2, 3];
+//
+//    for var in array.iter() {
+//        println!("{}", var);
+//    }
+
+    // 范围
+//    for (index, value) in (5..10).enumerate() {
+//        println!("index = {} and value = {}", index, value);
+//    }
+
+    // 行级别打印
+//    let lines = "hello\nworld".lines();
+//
+//    for (linenumber, line) in lines.enumerate() {
+//        println!("{}: {}", linenumber, line);
+//    }
+
+    // break continue c++ go 一样
+
+    // 类似goto语句
+//    'outer: for x in 0..10 {
+//        'inner: for y in 0..10 {
+//            if x % 2 == 0 { continue 'outer;}
+//            if y % 2 == 0 { continue 'inner;}
+//            println!("x: {} y: {}", x, y);
+//        }
+//    }
+
+    // vector
+//    let v = vec![1, 2, 3, 4, 5];
+
+    // 10 个 zero 值
+//    let v = vec![0; 10];
+
+    // 越界访问,会触发panic
+//    println!("Item 7 is {}", v[7]);
+
+    // 处理越界错误
+//    match v.get(7) {
+//        Some(x) => println!("Item 7 is {}", x),
+//        None => println!("Sorry, this vector is too short.")
+//    };
+
+    // 迭代vector 元素
+
+//    let mut v = vec![1, 2, 3, 4, 5];
+//
+//    // 1. 引用迭代
+//    for i in &v {
+//        println!("A reference to {}", i);
+//    }
+//
+//    // 2. 可变引用迭代
+//    for i in &mut v {
+//        println!("A mutable reference to {}", i);
+//    }
+//
+//    // 3. 获取所有权 (所有权被获得之后无法再次获取所有权)
+//    for i in v {
+//        println!("Take ownership of the vector and its element {}", i);
+//    }
+
+    // rust对于任何给定的资源都正好只有一个绑定与之对应
+
+//    let v = vec![1, 2, 3];
+//
+//    let v2 = v;
+//
+//    // 尝试使用v会引发错误, 因为所有权被转移了 (vector 栈上存有实际数据的指针, 栈上数据和堆上数据实时同步会有问题,违反Rust的安全保证)
+//    println!("{}", v[0]);
+
+    // 同样所有权被转移了
+//    let v = vec![1, 2, 3];
+//
+//    take(v);
+//
+//    println!("{}", v[0]);
+
+//    let  v = vec![1, 2, 3];
+//
+//    let mut v2 = v;
+//
+//    v2[1] = 100;
+//
+//    println!("{}", v[1]);
+
+    // 普通类型是copy的
+//    let v = 1;
+//    let v2 = v;
+//
+//    println!("v is: {}", v);
+
+
+    // 传到函数还是会copy的
+//    let a = 5;
+//
+//    let _y = double(a);
+//
+//    println!("{}" ,a);
+
+//    let a= true;
+//
+//    let _y = change_truth(a);
+//
+//    println!("{}", _y);
+
+    // 交还所有权
+//    let v1 = vec![1, 2, 3];
+//    let v2 = vec![1, 2, 3];
+//
+//    let (v1, v2, answer) = foo(v1, v2);
+
+    // 交换所有权更好的方法 (借用)
+//    let v1 = vec![1, 2, 3];
+//    let v2 = vec![1, 2, 3];
+//
+//    let answer = foo(&v1, &v2);
+
+
+    // TODO |a, &b| a + b 是什么意思呀
+//    fn sum_vec(v: &Vec<i32>) -> i32 {
+//        return v.iter().fold(0, |a, &b| a + b);
+//    }
+//
+//    fn foo(v1: &Vec<i32>, v2: &Vec<i32>) -> i32 {
+//        let s1 = sum_vec(v1);
+//        let s2 = sum_vec(v2);
+//        s1 + s2
+//    }
+//
+//    let v1 = vec![1, 2, 3];
+//    let v2 = vec![4, 5, 6];
+//
+//    let answer = foo(&v1, &v2);
+//
+//    println!("{}", answer);
+
+    // 引用是不能改变的
+//    fn foo(v: &Vec<i32>) {
+//        v.push(5);
+//    }
+//
+//    let v = vec![];
+//
+//    foo(&v);
+
+//    let mut x = 5;
+//
+//    {
+//        let y = &mut x;
+//        *y += 1;
+//    }
+//    println!("{}", x);
+
+    // 同一个作用域下,要么只有一个对资源A的可变引用(&mut T), 要么有N个不可变引用(&T)
+
+//    let mut x = 5;
+//
+//    let y = &mut x;
+//
+//    *y += 1;
+//
+//    println!("{}", x);
+
+    // 不同作用域就可以编译了
+//    let mut x = 5;
+//
+//    {
+//        let y = &mut x;
+//        *y += 1;
+//    }
+//
+//    println!("{}", x);
+
+    // 引用必须与它引用的值存活的一样长
+//    let y: &i32;
+//
+//    {
+//        let x = 5;
+//        y = &x;
+//    }
+
+//    let y: &i32;
+//
+//    let x = 5;
+//
+//    y = &x;
+
+//    let r;
+//
+//    {
+//        let i = 1;
+//        r = &i;
+//    }
+
+    // 生命周期推导
+//    fn skip_prefix<'a, 'b>(line: &'a str, prefix: &'b str) -> &'a str {
+//        line
+//    }
+//
+//
+//    let line = "lang:en=Hello World!";
+//    let lang = "en";
+//
+//    let v;
+//
+//    {
+//        let p = format!("lang:{}=", lang);
+//        v = skip_prefix(line, p.as_str());
+//    }
+//
+//    println!("{}", v);
+
+    // &mut i32  :  一个i32的可变引用
+    // &'a mut i32: 一个带有生命周期'a的i32的可变引用
+
+    // struct 的生命周期
+//    struct Foo<'a> {
+//        x : &'a i32,
+//    }
+//
+//    let y = &5;  // 等于 let _y = 5; let y = &_y;
+//
+//    let f = Foo { x: y };
+//    println!("{}", f.x);
+
+    // 实现一个方法
+//    struct Foo<'a> {
+//        x: &'a i32,
+//    }
+//
+//    impl<'a> Foo<'a> {
+//        fn x(&self) -> &'a i32 { self.x }
+//    }
+//
+//    let y = &5;
+//
+//    let f = Foo { x: y };
+//
+//    println!("x is :{}", f.x());
+
+
+    // 多次使用同一个生命周期
+//    fn x_or_y<'a>(x :&'a str, y: &'a str) -> &'a str {
+//        x
+//    }
+
+    // 使用不同的生命周期
+//    fn x_or_y<'a,'b> (x  : &'a str, y : &'b str) -> &'a str {
+//        x
+//    }
+
+    // static 横跨整个程序的生命周期
+    let x: &'static str = "Hello world.";
+
+    // 全局变量
+    static FOO: i32 = 5;
+    let x: &'static i32 = &FOO;
 
 
 }
